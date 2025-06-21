@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - My Website</title>
+    <title>Contact Us</title>
     <style>
         :root {
             --primary-color: #4CAF50;
@@ -11,135 +11,50 @@
             --text-color: #2c3e50;
             --bg-color: #f5f5f5;
             --container-bg: #ffffff;
-            --border-color: #ddd;
-            --secondary-text: #7f8c8d;
         }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
             background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
-        
         .container {
+            max-width: 600px;
+            margin: 0 auto;
             background: var(--container-bg);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            animation: fadeIn 0.5s ease-in-out;
-            width: 100%;
-            max-width: 600px;
-            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
         h1 {
-            color: var(--text-color);
             text-align: center;
-            margin-bottom: 20px;
-            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--primary-color);
         }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        input, textarea {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 16px;
+        input, textarea, button {
             width: 100%;
-            box-sizing: border-box;
-            transition: border 0.3s, box-shadow 0.3s;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
-        
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
         button {
             background: var(--primary-color);
             color: white;
-            padding: 14px;
             border: none;
-            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s, transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
+            transition: background 0.3s;
         }
-        
         button:hover {
             background: var(--hover-color);
-            transform: translateY(-2px);
         }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--secondary-text);
-            font-size: 14px;
-        }
-        
-        /* Spam protection - hidden from users */
-        .hp-field {
+        .success-message {
             display: none;
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            
-            .container {
-                padding: 25px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-            
-            input, textarea, button {
-                padding: 10px;
-                font-size: 15px;
-            }
-            
-            textarea {
-                min-height: 100px;
-            }
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -147,105 +62,56 @@
     <div class="container">
         <h1>Contact Us</h1>
         
-        <!-- FormSubmit.co Form with enhanced security -->
-        <form action="https://formsubmit.co/el/sokuvi" method="POST">
-            <!-- Required FormSubmit.co parameters -->
+        <!-- FormSubmit Form -->
+        <form id="contactForm" action="https://formsubmit.co/tart9245@gmail.com" method="POST">
+            <!-- Required FormSubmit Parameters -->
             <input type="hidden" name="_next" value="https://tar9245.github.io/Trtar/thank-you.html">
-            <input type="hidden" name="_cc" value="tart9245@gmail.com">
             <input type="hidden" name="_subject" value="New Contact Form Submission">
-            <input type="hidden" name="_autoresponse" value="Thank you for contacting us! We'll get back to you soon.">
-            <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
             
-            <!-- Honeypot field for spam prevention -->
-            <input type="text" name="_honey" class="hp-field">
+            <!-- Honeypot Field (Spam Protection) -->
+            <input type="text" name="_honey" style="display:none">
             
-            <!-- Visible Form Fields -->
-            <div>
-                <input type="text" name="name" placeholder="Your Full Name" required 
-                       pattern="[A-Za-z ]{3,}" 
-                       title="Please enter at least 3 characters">
-            </div>
+            <!-- User Input Fields -->
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required rows="5"></textarea>
             
-            <div>
-                <input type="email" name="email" placeholder="Your Email Address" required
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                       title="Please enter a valid email address">
-            </div>
-            
-            <div>
-                <input type="tel" name="phone" placeholder="Phone Number (Optional)"
-                       pattern="[0-9]{10,15}"
-                       title="Please enter a valid phone number">
-            </div>
-            
-            <div>
-                <textarea name="message" placeholder="Your message..." required
-                          minlength="10" maxlength="500"></textarea>
-            </div>
-            
-            <button type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right:8px;">
-                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.5.5 0 0 1-.928.116L8 10l-4.8 5.4a.5.5 0 0 1-.728-.063l-.146-.145a.5.5 0 0 1 .063-.728l5-5.6a.5.5 0 0 1 .723-.044L15.314.038a.5.5 0 0 1 .54.11ZM6.636 9.07 4.21 12.32l1.238 1.239 3.279-3.008-.791-.79Z"/>
-                </svg>
-                Send Message
-            </button>
+            <button type="submit">Send Message</button>
         </form>
         
-        <div class="form-footer">
-            <p>We'll respond to your message within 24 hours</p>
+        <!-- Success Message (Shown after submission) -->
+        <div id="successMessage" class="success-message">
+            <p>Thank you! Your message has been sent successfully.</p>
+            <p>We'll contact you soon.</p>
         </div>
     </div>
 
-    <!-- Enhanced form validation feedback -->
+    <!-- Form Submission Handling -->
     <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('input[required], textarea[required]');
-            let isValid = true;
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
             
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.style.borderColor = 'red';
-                    isValid = false;
+            // Submit form data to FormSubmit
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
                     
-                    // Add error message
-                    if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.style.color = 'red';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '5px';
-                        errorMsg.textContent = 'This field is required';
-                        input.parentNode.insertBefore(errorMsg, input.nextSibling);
-                    }
-                } else {
-                    input.style.borderColor = '#ddd';
-                    // Remove error message if exists
-                    if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-                        input.nextElementSibling.remove();
-                    }
+                    // Redirect to thank-you page after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = "https://tar9245.github.io/Trtar/thank-you.html";
+                    }, 3000);
                 }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                // Scroll to first error
-                const firstError = this.querySelector('[style*="border-color: red"]');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
-
-        // Clear error on input
-        document.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.style.borderColor === 'red') {
-                    this.style.borderColor = '#ddd';
-                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('error-message')) {
-                        this.nextElementSibling.remove();
-                    }
-                }
+            })
+            .catch(error => {
+                alert('Error sending message. Please try again later.');
+                console.error('Error:', error);
             });
         });
     </script>
