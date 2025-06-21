@@ -18,11 +18,15 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
+            margin: 0;
             padding: 20px;
             background-color: var(--bg-color);
             color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .container {
@@ -31,6 +35,9 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             animation: fadeIn 0.5s ease-in-out;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
         }
         
         @keyframes fadeIn {
@@ -42,7 +49,7 @@
             color: var(--text-color);
             text-align: center;
             margin-bottom: 20px;
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
         }
         
         form {
@@ -58,7 +65,7 @@
             font-size: 16px;
             width: 100%;
             box-sizing: border-box;
-            transition: border 0.3s;
+            transition: border 0.3s, box-shadow 0.3s;
         }
         
         input:focus, textarea:focus {
@@ -85,6 +92,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
         }
         
         button:hover {
@@ -109,13 +117,28 @@
         }
         
         /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 25px;
+            }
+        }
+        
         @media (max-width: 480px) {
             .container {
                 padding: 20px;
             }
             
-            h1 {
-                font-size: 1.5rem;
+            input, textarea, button {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            textarea {
+                min-height: 100px;
             }
         }
     </style>
@@ -174,7 +197,7 @@
         </div>
     </div>
 
-    <!-- Simple form validation feedback -->
+    <!-- Enhanced form validation feedback -->
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             const inputs = this.querySelectorAll('input[required], textarea[required]');
@@ -184,15 +207,46 @@
                 if (!input.value.trim()) {
                     input.style.borderColor = 'red';
                     isValid = false;
+                    
+                    // Add error message
+                    if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-message';
+                        errorMsg.style.color = 'red';
+                        errorMsg.style.fontSize = '0.8rem';
+                        errorMsg.style.marginTop = '5px';
+                        errorMsg.textContent = 'This field is required';
+                        input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                    }
                 } else {
                     input.style.borderColor = '#ddd';
+                    // Remove error message if exists
+                    if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
+                        input.nextElementSibling.remove();
+                    }
                 }
             });
             
             if (!isValid) {
                 e.preventDefault();
-                alert('Please fill in all required fields');
+                // Scroll to first error
+                const firstError = this.querySelector('[style*="border-color: red"]');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
+        });
+
+        // Clear error on input
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === 'red') {
+                    this.style.borderColor = '#ddd';
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('error-message')) {
+                        this.nextElementSibling.remove();
+                    }
+                }
+            });
         });
     </script>
 </body>
